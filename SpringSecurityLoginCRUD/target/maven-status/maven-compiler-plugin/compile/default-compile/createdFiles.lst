@@ -1,0 +1,12 @@
+ojt\security\crud\persistence\dao\UserDao.class
+ojt\security\crud\web\form\UserForm.class
+ojt\security\crud\persistence\entity\Authority.class
+ojt\security\crud\bl\dto\CustomUserDetail.class
+ojt\security\crud\bl\service\UserService.class
+ojt\security\crud\persistence\dao\impl\UserDaoImpl.class
+ojt\security\crud\config\DeploymentListener.class
+ojt\security\crud\persistence\dao\AuthorityDao.class
+ojt\security\crud\persistence\dao\impl\AuthorityDaoImpl.class
+ojt\security\crud\persistence\entity\User.class
+ojt\security\crud\bl\service\impl\UserServiceImpl.class
+ojt\security\crud\web\controller\UserController.class
