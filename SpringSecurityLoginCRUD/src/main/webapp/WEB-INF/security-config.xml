@@ -9,15 +9,15 @@
     http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<http>
-		<intercept-url pattern="/home"
+		<intercept-url pattern="/userList"
 			access="hasAnyRole('USER', 'ADMIN')" />
-		<intercept-url pattern="/user"
+		<intercept-url pattern="/userList"
 			access="hasAnyRole('USER', 'ADMIN')" />
-		<intercept-url pattern="/admin"
+		<intercept-url pattern="/userList"
 			access="hasRole('ADMIN')" />
 		<form-login login-page="/login.jsp"
 			login-processing-url="/login" username-parameter="username"
-			password-parameter="password" default-target-url="/home" />
+			password-parameter="password" default-target-url="/userList" />
 		<logout logout-url="/logout" logout-success-url="/login.jsp" />
 		<access-denied-handler error-page="/error" />
 	</http>

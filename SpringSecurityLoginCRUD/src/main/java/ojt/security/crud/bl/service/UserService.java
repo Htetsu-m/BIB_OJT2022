@@ -2,8 +2,7 @@ package ojt.security.crud.bl.service;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
+import ojt.security.crud.persistence.entity.Authority;
 import ojt.security.crud.persistence.entity.User;
 import ojt.security.crud.web.form.UserForm;
 
@@ -26,7 +25,18 @@ public interface UserService {
      * @return
      * @return List<User>
      */
-    public List<User> getUserList();
+    public List<User> doGetUserList();
+
+    /**
+     * <h2> doGetAuthorityList</h2>
+     * <p>
+     * 
+     * </p>
+     *
+     * @return
+     * @return List<Authority>
+     */
+    public List<Authority> doGetAuthorityList();
 
     /**
      * <h2>addUser</h2>
@@ -60,7 +70,8 @@ public interface UserService {
      * @return
      * @return UserForm
      */
-    public UserForm doGetUserById(int empid);
+    public UserForm doGetUserById(int id);
+
     /**
      * <h2>updateUser</h2>
      * <p>
@@ -70,8 +81,31 @@ public interface UserService {
      * @param userForm
      * @return void
      */
-    public void updateUser(UserForm userForm);
-    
+    public void doUpdateUser(UserForm userForm);
+
+    /**
+     * <h2>doGetUserByName</h2>
+     * <p>
+     * 
+     * </p>
+     *
+     * @param name
+     * @return
+     * @return UserForm
+     */
     public UserForm doGetUserByName(String name);
+
+    /**
+     * <h2>doGetUserCount</h2>
+     * <p>
+     * 
+     * </p>
+     *
+     * @return
+     * @return long
+     */
     public long doGetUserCount();
+
+    public Authority doGetAuthorityById(int authoId);
+
 }

@@ -7,6 +7,6 @@
 </head>
 <body>
   <h3>You are not authorized to access this page.</h3>
-  <a href="<%=request.getContextPath()%>/home">Go to Home Page</a>
+  <a href="<%=request.getContextPath()%>/userList">Go to Home Page</a>
 </body>
 </html>

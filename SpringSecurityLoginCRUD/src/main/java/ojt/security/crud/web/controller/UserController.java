@@ -3,6 +3,7 @@ package ojt.security.crud.web.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +23,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ojt.security.crud.bl.service.UserService;
+import ojt.security.crud.persistence.entity.Authority;
 import ojt.security.crud.persistence.entity.User;
 import ojt.security.crud.web.form.UserForm;
 
 /**
- * <h2> UserController Class</h2>
+ * <h2>UserController Class</h2>
  * <p>
  * Process for Displaying UserController
  * </p>
@@ -53,31 +55,35 @@ public class UserController {
      */
     @Autowired
     private MessageSource messageSource;
-    
+
     @RequestMapping(value = "/userList")
     public ModelAndView getUserList(ModelAndView model) throws IOException {
-        List<User> UserList = userService.getUserList();
+        List<User> UserList = userService.doGetUserList();
         model.addObject("UserList", UserList);
         model.setViewName("userList");
         return model;
-
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.GET)
     public ModelAndView newUser(ModelAndView model) {
-        User user = new User();
+        UserForm user = new UserForm();
         ModelAndView createUser = new ModelAndView("createUser");
-        createUser.addObject("rollBackUserForm", user);
         createUser.setViewName("createUser");
+        List<Authority> roleList = userService.doGetAuthorityList();
+        createUser.addObject("AuthorityList", roleList);
+        createUser.addObject("rollBackUserForm", user);
         return createUser;
     }
 
     @RequestMapping(value = "/insertUser", params = "addUser", method = RequestMethod.POST)
-    public ModelAndView insertUser(@Valid UserForm userForm, BindingResult result,
+    public ModelAndView insertUser(@ModelAttribute("rollBackUserForm") @Valid UserForm userForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) {
+        List<Authority> authoList = new ArrayList<Authority>();
+        Authority authoId = userService.doGetAuthorityById(userForm.getAuthority().getId());
+        authoList.add(authoId);
+        userForm.setAuthorities(authoList);
         this.userService.doAddUser(userForm);
         ModelAndView createUserView = new ModelAndView("redirect:/userList");
-
         return createUserView;
     }
 
@@ -88,12 +94,23 @@ public class UserController {
         return new ModelAndView("redirect:/userList");
     }
 
+    @RequestMapping(value = "/updateUser", method = RequestMethod.GET)
+    public ModelAndView editUser(@RequestParam("id") Integer userId, HttpServletRequest request) {
+        UserForm user = userService.doGetUserById(userId);
+        ModelAndView model = new ModelAndView("updateUser");
+        model.setViewName("updateUser");
+        List<Authority> roleList = userService.doGetAuthorityList();
+        model.addObject("AuthorityList", roleList);
+        model.addObject("user", user);
+        return model;
+    }
+
     @RequestMapping(value = "/editUser", params = "update", method = RequestMethod.POST)
     public ModelAndView updateUser(@ModelAttribute("finalConfirmStudentForm") @Valid UserForm userForm,
             BindingResult result, HttpServletRequest request, HttpServletResponse response)
             throws ParseException, FileNotFoundException, IOException {
 
-        this.userService.updateUser(userForm);
+        this.userService.doUpdateUser(userForm);
         ModelAndView updateUserView = new ModelAndView("redirect:/userList");
         return updateUserView;
     }
@@ -105,23 +122,18 @@ public class UserController {
         updateUserView.addObject("user", userForm);
         return updateUserView;
     }
-    @RequestMapping(value = "/home")
-    public String homePage() {
-        return "home";
-    }
 
-    @RequestMapping(value = "/user")
-    public String userPage() {
-        return "user";
-    }
+    /*
+     * @RequestMapping(value = "/home") public String homePage() { return "home"; }
+     * 
+     * @RequestMapping(value = "/user") public String userPage() { return "user"; }
+     * 
+     * @RequestMapping(value = "/admin") public String adminPage() { return "admin";
+     * }
+     */
 
-    @RequestMapping(value = "/admin")
-    public String adminPage() {
-        return "admin";
-    }
-
-    @RequestMapping(value = "/error")
-    public String error() {
-        return "access-denied";
-    }
+    /*
+     * @RequestMapping(value = "/error") public String error() { return
+     * "access-denied"; }
+     */
 }

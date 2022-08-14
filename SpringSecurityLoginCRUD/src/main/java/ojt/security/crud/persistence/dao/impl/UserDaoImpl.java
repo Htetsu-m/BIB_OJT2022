@@ -1,20 +1,30 @@
 package ojt.security.crud.persistence.dao.impl;
 
-import java.util.Date;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import ojt.security.crud.persistence.dao.UserDao;
 import ojt.security.crud.persistence.entity.User;
 
+/**
+ * <h2>UserDaoImpl Class</h2>
+ * <p>
+ * Process for Displaying UserDaoImpl
+ * </p>
+ * 
+ * @author User
+ *
+ */
 @Repository
 @Transactional
 public class UserDaoImpl implements UserDao {
+
     /**
      * <h2>sessionFactory</h2>
      * <p>
@@ -32,43 +42,39 @@ public class UserDaoImpl implements UserDao {
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
-    public List<User> getUserList() {
+    @Override
+    public List<User> dbGetUserList() {
         return sessionFactory.getCurrentSession().createQuery("from User").list();
     }
 
     /**
-     * <h2>addUser</h2>
+     * <h2>dbAddUser</h2>
      * <p>
      * 
      * </p>
      * 
      * @param user
-     * @param currentDate
      */
     @Override
-    public void dbAddUser(User user, Date currentDate) {
+    public void dbAddUser(User user) {
         sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 
     /**
-     * <h2>deleteUser</h2>
+     * <h2>dbSaveUser</h2>
      * <p>
      * 
      * </p>
      * 
-     * @param userId
+     * @param user
      */
     @Override
-    public void deleteUser(Integer userId) {
-        User user = (User) sessionFactory.getCurrentSession().load(User.class, userId);
-        if (null != user) {
-            this.sessionFactory.getCurrentSession().delete(user);
-        }
+    public void dbSaveUser(User user) {
+        this.sessionFactory.getCurrentSession().save(user);
     }
 
     /**
-     * <h2>getUser</h2>
+     * <h2>dbGetUserById</h2>
      * <p>
      * 
      * </p>
@@ -85,11 +91,10 @@ public class UserDaoImpl implements UserDao {
         queryUserById.setParameter("id", userId);
         User resultUser = (User) queryUserById.uniqueResult();
         return resultUser;
-
     }
-  //@SuppressWarnings("rawtypes")
+
     /**
-     * <h2> dbGetUserByName </h2>
+     * <h2>dbGetUserByName</h2>
      * <p>
      * 
      * </p>
@@ -99,21 +104,10 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public User dbGetUserByName(String username) {
-        Query queryUserByName = this.sessionFactory.getCurrentSession().createQuery("SELECT u FROM User u WHERE u.username = :username");
-        queryUserByName.setParameter("username", username);
-        return (User) queryUserByName.uniqueResult();
-    }
-    /**
-     * <h2>updateUser</h2>
-     * <p>
-     * 
-     * </p>
-     * 
-     * @param user
-     */
-    @Override
-    public void updateUser(User user) {
-        this.sessionFactory.getCurrentSession().update(user);
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("SELECT u FROM User u WHERE u.username = :username");
+        query.setParameter("username", username);
+        return (User) query.uniqueResult();
     }
 
     /**
@@ -129,8 +123,25 @@ public class UserDaoImpl implements UserDao {
         Query query = this.sessionFactory.getCurrentSession().createQuery("SELECT COUNT(u) FROM User u");
         return (long) query.getSingleResult();
     }
+
     /**
-     * <h2>dbSaveUser</h2>
+     * <h2>deleteUser</h2>
+     * <p>
+     * 
+     * </p>
+     * 
+     * @param userId
+     */
+    @Override
+    public void dbDeleteUser(Integer userId) {
+        User user = (User) sessionFactory.getCurrentSession().load(User.class, userId);
+        if (null != user) {
+            this.sessionFactory.getCurrentSession().delete(user);
+        }
+    }
+
+    /**
+     * <h2>updateUser</h2>
      * <p>
      * 
      * </p>
@@ -138,9 +149,8 @@ public class UserDaoImpl implements UserDao {
      * @param user
      */
     @Override
-    public void dbSaveUser(User user) {
-        this.sessionFactory.getCurrentSession().save(user);
+    public void dbUpdateUser(User user) {
+        this.sessionFactory.getCurrentSession().update(user);
 
     }
-
 }

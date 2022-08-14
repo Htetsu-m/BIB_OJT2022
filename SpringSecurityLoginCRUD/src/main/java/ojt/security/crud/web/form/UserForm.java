@@ -1,11 +1,16 @@
 package ojt.security.crud.web.form;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ojt.security.crud.persistence.entity.Authority;
 import ojt.security.crud.persistence.entity.User;
 
 /**
@@ -17,6 +22,8 @@ import ojt.security.crud.persistence.entity.User;
  * @author User
  *
  */
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserForm {
@@ -29,85 +36,8 @@ public class UserForm {
     private String email;
     @NotEmpty
     private String password;
-    /**
-     * <h2>getId</h2>
-     * <p>
-     * Getter Method For Id of User
-     * </p>
-     *
-     * @return
-     * @return int
-     */
-
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * <h2>setId</h2>
-     * <p>
-     * 
-     * </p>
-     *
-     * @param id
-     * @return void
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * <h2>getName</h2>
-     * <p>
-     * 
-     * </p>
-     *
-     * @return
-     * @return String
-     */
-
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * <h2>setName</h2>
-     * <p>
-     * 
-     * </p>
-     *
-     * @param name
-     * @return void
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * <h2>getPassword</h2>
-     * <p>
-     * 
-     * </p>
-     *
-     * @return
-     * @return String
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * <h2>setPassword</h2>
-     * <p>
-     * 
-     * </p>
-     *
-     * @param password
-     * @return void
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private List<Authority> authorities = new ArrayList<Authority>();
+    private Authority authority;
     
     public UserForm(User user) {
         super();
@@ -116,25 +46,7 @@ public class UserForm {
         this.phone = user.getPhone();
         this.email = user.getEmail();
         this.password = user.getPassword();
+        this.authorities=user.getAuthorities();
     }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    
 
 }

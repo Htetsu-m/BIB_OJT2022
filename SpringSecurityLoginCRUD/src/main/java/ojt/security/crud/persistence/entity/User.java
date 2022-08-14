@@ -1,11 +1,9 @@
 package ojt.security.crud.persistence.entity;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,7 +23,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ojt.security.crud.web.form.UserForm;
 
-
 /**
  * <h2>User Class</h2>
  * <p>
@@ -35,13 +32,13 @@ import ojt.security.crud.web.form.UserForm;
  * @author User
  *
  */
-@Setter
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +47,11 @@ public class User implements Serializable {
     private String password;
     private String phone;
     private String email;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    private List<Authority> authorities = new ArrayList<Authority>();
+    //private Authority authority;
     
     public User(UserForm userForm) {
         super();
@@ -57,14 +59,7 @@ public class User implements Serializable {
         this.username = userForm.getUsername();
         this.phone = userForm.getPhone();
         this.email = userForm.getEmail();
-        this.password = userForm.getPassword();     
+        this.password = userForm.getPassword();
+        this.authorities=userForm.getAuthorities();
     }
-
-    public User() {
-        super();
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
-    private List<Authority> authorities = new ArrayList<Authority>();
 }
