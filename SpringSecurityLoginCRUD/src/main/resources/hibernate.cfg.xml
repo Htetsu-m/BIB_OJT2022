@@ -7,5 +7,6 @@
 	<session-factory>
 		<mapping class="ojt.security.crud.persistence.entity.Authority" />
 		<mapping class="ojt.security.crud.persistence.entity.User" />
+        <mapping class="ojt.security.crud.persistence.entity.PasswordReset" />
 	</session-factory>
 </hibernate-configuration>

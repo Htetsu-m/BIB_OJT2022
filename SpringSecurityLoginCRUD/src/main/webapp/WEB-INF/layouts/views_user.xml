@@ -2,7 +2,6 @@
 <!DOCTYPE tiles-definitions PUBLIC
     "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
     "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
-
 <tiles-definitions>
     <!-- UserList Page -->
     <definition name="userList" extends="template1">
@@ -35,5 +34,19 @@
             value="updateUserConfirm" />
         <put-attribute name="body"
             value="/WEB-INF/views/user/update/updateUserConfirm.jsp" />
+    </definition>
+    <!-- Forgot Password Form Page -->
+    <definition name="forgot_password_form" extends="template1">
+        <put-attribute name="title"
+            value="forgot_password_form" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/mail/forgot_password_form.jsp" />
+    </definition>
+     <!-- Reset Password Form Page -->
+    <definition name="reset_password_form" extends="template1">
+        <put-attribute name="title"
+            value="reset_password_form" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/mail/reset_password_form.jsp" />
     </definition>
 </tiles-definitions>

@@ -1,5 +1,6 @@
 package ojt.security.crud.persistence.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,9 +8,11 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import ojt.security.crud.persistence.dao.UserDao;
+import ojt.security.crud.persistence.entity.PasswordReset;
 import ojt.security.crud.persistence.entity.User;
 
 /**
@@ -42,9 +45,10 @@ public class UserDaoImpl implements UserDao {
      * 
      * @return
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<User> dbGetUserList() {
-        return sessionFactory.getCurrentSession().createQuery("from User").list();
+        return sessionFactory.getCurrentSession().createQuery("select u from User u where deletedAt is null").list();
     }
 
     /**
@@ -133,13 +137,13 @@ public class UserDaoImpl implements UserDao {
      * @param userId
      */
     @Override
-    public void dbDeleteUser(Integer userId) {
+    public void dbDeleteUser(Integer userId,Date currentDate) {
         User user = (User) sessionFactory.getCurrentSession().load(User.class, userId);
         if (null != user) {
-            this.sessionFactory.getCurrentSession().delete(user);
+            user.setDeletedAt(new Date());
+            this.sessionFactory.getCurrentSession().update(user);      
         }
     }
-
     /**
      * <h2>updateUser</h2>
      * <p>
@@ -151,6 +155,13 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void dbUpdateUser(User user) {
         this.sessionFactory.getCurrentSession().update(user);
+    }
 
+    @Override
+    public User dbGetFindByEmail(String email) {
+        Query query = this.sessionFactory.getCurrentSession()
+                .createQuery("SELECT u FROM User u WHERE u.email = :email");
+        query.setParameter("email", email);
+        return (User) query.uniqueResult();
     }
 }

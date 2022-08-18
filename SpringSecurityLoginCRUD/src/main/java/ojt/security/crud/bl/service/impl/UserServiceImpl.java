@@ -1,12 +1,14 @@
 package ojt.security.crud.bl.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +48,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     @Autowired
     private AuthorityDao authorityDao;
+    /**
+     * <h2>passwordEncoder</h2>
+     * <p>
+     * passwordEncoder
+     * </p>
+     */
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     /**
      * <h2>getUserList</h2>
@@ -86,6 +96,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void doAddUser(UserForm userForm) {
         User user = new User(userForm);
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
         List<Authority> authorities = new ArrayList<Authority>();
         System.out.println(user.getAuthorities());
         this.userDao.dbAddUser(user);
@@ -101,8 +113,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     @Override
     @Transactional
-    public void deleteUser(Integer userId) {
-        userDao.dbDeleteUser(userId);
+    public void doDeleteUser(Integer userId) {
+        Date currentDate = new Date();
+        userDao.dbDeleteUser(userId, currentDate);
     }
 
     /**
@@ -158,16 +171,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         authoList.add(authoId);
         updateUser.setAuthorities(authoList);
         this.userDao.dbUpdateUser(updateUser);
-
-        // updateUser.setAuthorities(userForm.getAuthority());
-        // updateUser.setAuthorities(userForm.getAuthorities());
-        // updateUser.setAuthorities((List<Authority>) userForm.getAuthority());
-        // this.userDao.updateUser(updateUser);
-        // Authority updateRole =
-        // this.authorityDao.dbGetAuthorityById(userForm.getId());
-        // updateRole.setName(userForm.getAuthority());
-        // this.userDao.updateUser(updateRole);
-
     }
 
     /**
@@ -204,9 +207,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
+    /**
+     * <h2>doGetAuthorityById</h2>
+     * <p>
+     * 
+     * </p>
+     * 
+     * @param authoId
+     * @return
+     */
     @Override
     public Authority doGetAuthorityById(int authoId) {
         return this.authorityDao.dbGetAuthorityById(authoId);
+    }
 
+    @Override
+    public User findByEmail(String email) {
+        return this.userDao.dbGetFindByEmail(email);
     }
 }

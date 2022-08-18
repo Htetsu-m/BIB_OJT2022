@@ -18,7 +18,8 @@
             <c:url var="updateUser" value="/editUser"></c:url>
             <form:form class="form-create" action="editUser"
               method="POST" id="form" modelAttribute="editedUserForm">
-              <input type="hidden" name="id" value="${user.id }" />
+              <input type="hidden" name="id"
+                value="${editedUserForm.id }" />
               <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
                   <h4 class="text-center forms-header">
@@ -33,38 +34,34 @@
                   <div class="form-group">
                     <label for="username">Name</label> <input
                       class="form-control" name="username"
-                      value="${user.username }">
+                      value="${editedUserForm.username }">
                     <form:errors path="username" class="text-danger" />
                   </div>
                   <div class="form-group">
                     <label for="phone">Phone</label> <input
                       class="form-control" name="phone"
-                      value="${user.phone }" />
+                      value="${editedUserForm.phone }" />
                     <form:errors path="phone" class="text-danger" />
                   </div>
 
                   <div class="form-group">
-                    <label for="email">Email</label> 
-                    <input class="form-control" name="email"
-                      value="${user.email }" />
+                    <label for="email">Email</label> <input
+                      class="form-control" name="email"
+                      value="${editedUserForm.email }" />
                     <form:errors path="email" class="text-danger" />
                   </div>
                   <div class="form-group">
                     <label for="authority">Authority Role</label>
-                    <select name="authority"
-                      value="${user.authority}">
+                    <form:select path="authority.id"
+                      value="${editedUserForm.authority.id}"
+                      class="form-select">
                       <c:forEach items="${AuthorityList}"
                         var="authority" varStatus="loop">
-                        <option value="${authority.id }">
+                        <option value="${authority.id }"
+                          <c:if test="${editedUserForm.authority.id == authority.id }"> selected</c:if>>
                           ${authority.name}</option>
                       </c:forEach>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Password</label> <input
-                      class="form-control" name="password"
-                      value="${user.password }" />
-                    <form:errors path="password" class="text-danger" />
+                    </form:select>
                   </div>
 
                   <button type="submit" class="btn btn-info"

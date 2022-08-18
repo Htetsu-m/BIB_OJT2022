@@ -15,7 +15,7 @@ import ojt.security.crud.persistence.entity.Authority;
 import ojt.security.crud.persistence.entity.User;
 
 /**
- * <h2> DeploymentListener Class</h2>
+ * <h2>DeploymentListener Class</h2>
  * <p>
  * Process for Displaying DeploymentListener
  * </p>
@@ -26,7 +26,7 @@ import ojt.security.crud.persistence.entity.User;
 @Component
 public class DeploymentListener {
     /**
-     * <h2> passwordEncoder</h2>
+     * <h2>passwordEncoder</h2>
      * <p>
      * passwordEncoder
      * </p>
@@ -34,7 +34,7 @@ public class DeploymentListener {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     /**
-     * <h2> authorityDao</h2>
+     * <h2>authorityDao</h2>
      * <p>
      * authorityDao
      * </p>
@@ -42,7 +42,7 @@ public class DeploymentListener {
     @Autowired
     private AuthorityDao authorityDao;
     /**
-     * <h2> userDao</h2>
+     * <h2>userDao</h2>
      * <p>
      * userDao
      * </p>
@@ -51,7 +51,7 @@ public class DeploymentListener {
     private UserDao userDao;
 
     /**
-     * <h2> addInitialData</h2>
+     * <h2>addInitialData</h2>
      * <p>
      * 
      * </p>
@@ -65,18 +65,20 @@ public class DeploymentListener {
             Authority adminAuthority = new Authority(null, "ROLE_ADMIN");
             this.authorityDao.dbSaveAuthority(adminAuthority);
             adminAuthorities.add(adminAuthority);
-            User admin = new User(1, "admin", passwordEncoder.encode("123"),"1134","admin@gmail.com", adminAuthorities);
+            User admin = new User(1, "admin", passwordEncoder.encode("123"), "1134", "admin@gmail.com", null,
+                    adminAuthorities);
             this.userDao.dbSaveUser(admin);
             for (Authority authority : adminAuthorities) {
                 System.out.println(authority.getId());
                 System.out.println(authority.getName());
             }
-                        
+
             List<Authority> userAuthorities = new ArrayList<Authority>();
             Authority userAuthority = new Authority(null, "ROLE_USER");
             this.authorityDao.dbSaveAuthority(userAuthority);
             userAuthorities.add(userAuthority);
-            User user = new User(2 , "user", passwordEncoder.encode("123"),"5678","user@gmail.com", userAuthorities);
+            User user = new User(2, "user", passwordEncoder.encode("123"), "5678", "user@gmail.com", null,
+                    userAuthorities);
             this.userDao.dbSaveUser(user);
         }
     }

@@ -1,10 +1,22 @@
 package ojt.security.crud.persistence.dao;
 
+import java.util.Date;
 import java.util.List;
 
+import ojt.security.crud.persistence.entity.PasswordReset;
 import ojt.security.crud.persistence.entity.User;
 
+/**
+ * <h2>UserDao Class</h2>
+ * <p>
+ * Process for Displaying UserDao
+ * </p>
+ * 
+ * @author User
+ *
+ */
 public interface UserDao {
+
     /**
      * <h2>getUserList</h2>
      * <p>
@@ -36,7 +48,7 @@ public interface UserDao {
      * @param userId
      * @return void
      */
-    public void dbDeleteUser(Integer userId);
+    public void dbDeleteUser(Integer userId,Date currentDate);
 
     /**
      * <h2>getUser</h2>
@@ -94,4 +106,6 @@ public interface UserDao {
      * @return User
      */
     public User dbGetUserByName(String username);
+
+    public User dbGetFindByEmail(String email);
 }

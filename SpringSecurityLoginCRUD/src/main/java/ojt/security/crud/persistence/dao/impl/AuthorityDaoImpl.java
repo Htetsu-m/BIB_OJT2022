@@ -73,10 +73,19 @@ public class AuthorityDaoImpl implements AuthorityDao {
         return this.sessionFactory.getCurrentSession().createQuery("from Authority").list();
     }
 
+    /**
+     * <h2>dbGetAuthorityById</h2>
+     * <p>
+     * 
+     * </p>
+     * 
+     * @param id
+     * @return
+     */
     @Override
     public Authority dbGetAuthorityById(int id) {
         Query query = this.sessionFactory.getCurrentSession().createQuery("SELECT a FROM Authority a WHERE a.id = :id");
-        query.setParameter("id",id);
+        query.setParameter("id", id);
         Authority resultRole = (Authority) query.uniqueResult();
         return resultRole;
     }

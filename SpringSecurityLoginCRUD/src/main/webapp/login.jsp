@@ -12,6 +12,7 @@
     Enter UserName: <input type="text" name="username" /><br /><br />
     Enter Password: <input type="password" name="password" /> <br /><br />
     <input type="submit" value="Login" />
+    <a href="forgotPassword">Forgot password?</a>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   </form>
 </body>

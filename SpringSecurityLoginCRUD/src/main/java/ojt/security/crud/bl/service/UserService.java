@@ -28,7 +28,7 @@ public interface UserService {
     public List<User> doGetUserList();
 
     /**
-     * <h2> doGetAuthorityList</h2>
+     * <h2>doGetAuthorityList</h2>
      * <p>
      * 
      * </p>
@@ -58,7 +58,7 @@ public interface UserService {
      * @param userId
      * @return void
      */
-    public void deleteUser(Integer userId);
+    public void doDeleteUser(Integer userId);
 
     /**
      * <h2>getUser</h2>
@@ -106,6 +106,27 @@ public interface UserService {
      */
     public long doGetUserCount();
 
+    /**
+     * <h2>doGetAuthorityById</h2>
+     * <p>
+     * 
+     * </p>
+     *
+     * @param authoId
+     * @return
+     * @return Authority
+     */
     public Authority doGetAuthorityById(int authoId);
 
+    /**
+     * <h2>findByEmail</h2>
+     * <p>
+     * 
+     * </p>
+     *
+     * @param email
+     * @return
+     * @return User
+     */
+    public User findByEmail(String email);
 }

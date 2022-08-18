@@ -3,8 +3,16 @@ package ojt.security.crud.persistence.dao;
 import java.util.List;
 
 import ojt.security.crud.persistence.entity.Authority;
-import ojt.security.crud.persistence.entity.User;
 
+/**
+ * <h2> AuthorityDao Class</h2>
+ * <p>
+ * Process for Displaying AuthorityDao
+ * </p>
+ * 
+ * @author User
+ *
+ */
 public interface AuthorityDao {
     /**
      * <h2>dbSaveAuthority</h2>
@@ -38,8 +46,9 @@ public interface AuthorityDao {
      * @return long
      */
     public long dbGetAuthorityCount();
+
     /**
-     * <h2> dbGetAuthorityById</h2>
+     * <h2>dbGetAuthorityById</h2>
      * <p>
      * 
      * </p>
