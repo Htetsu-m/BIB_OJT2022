@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <!-- UserList Page -->
+    <definition name="userList" extends="template1">
+        <put-attribute name="title" value="UserList" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/list/userList.jsp" />
+    </definition>
+    <!-- createUser -->
+    <definition name="createUser" extends="template1">
+        <put-attribute name="title" value="createUser" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/create/createUser.jsp" />
+    </definition>
+    <!-- createUserConfirm Page -->
+    <definition name="createUserConfirm" extends="template1">
+        <put-attribute name="title"
+            value="createUserConfirm" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/create/createUserConfirm.jsp" />
+    </definition>
+    <!-- UpdateUser Page -->
+    <definition name="updateUser" extends="template1">
+        <put-attribute name="title" value="updateUser" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/update/updateUser.jsp" />
+    </definition>
+    <!-- UpdateUserConfirm Page -->
+    <definition name="updateUserConfirm" extends="template1">
+        <put-attribute name="title"
+            value="updateUserConfirm" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/update/updateUserConfirm.jsp" />
+    </definition>
+    <!-- Forgot Password Form Page -->
+    <definition name="forgot_password_form" extends="template1">
+        <put-attribute name="title"
+            value="forgot_password_form" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/mail/forgot_password_form.jsp" />
+    </definition>
+     <!-- Reset Password Form Page -->
+    <definition name="reset_password_form" extends="template1">
+        <put-attribute name="title"
+            value="reset_password_form" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/user/mail/reset_password_form.jsp" />
+    </definition>
+</tiles-definitions>
